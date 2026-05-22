@@ -33,13 +33,6 @@ export function calculateHealth(motorData) {
     degradation += 0.4;
   }
 
-  // RPM-based degradation
-  if (motorData.rpm > 4000) {
-    degradation += 1.0;
-  } else if (motorData.rpm > 3500) {
-    degradation += 0.3;
-  }
-
   // Apply degradation
   motorData.health = Math.max(0, motorData.health - degradation * 0.1);
 
@@ -75,42 +68,6 @@ export function generateStatus(motorData) {
     return 'WARNING';
   }
   return 'NORMAL';
-}
-
-/**
- * Calculate motor efficiency percentage
- */
-export function calculateEfficiency(motorData) {
-  let efficiency = 95; // Base efficiency
-
-  // Temperature impact
-  if (motorData.temperature > 60) {
-    efficiency -= (motorData.temperature - 60) * 0.3;
-  }
-
-  // Current overload impact
-  if (motorData.current > 12) {
-    efficiency -= (motorData.current - 12) * 0.8;
-  }
-
-  // Vibration impact
-  efficiency -= (motorData.vibration - 1) * 5;
-
-  // Health impact
-  efficiency *= (motorData.health / 100);
-
-  return Math.max(0, Math.min(100, efficiency));
-}
-
-/**
- * Calculate power consumption in kW
- */
-export function calculatePower(motorData) {
-  const voltage = 415; // Standard 3-phase industrial voltage
-  const powerFactor = 0.85;
-  const sqrtThree = 1.732;
-  const power = (sqrtThree * voltage * motorData.current * powerFactor) / 1000;
-  return Math.round(power * 100) / 100;
 }
 
 /**
@@ -186,7 +143,6 @@ export function getConfidenceScore(motorData) {
     motorData.temperature > 80,
     motorData.current > 15,
     motorData.vibration >= 2,
-    motorData.rpm > 3500,
     motorData.health < 70,
   ].filter(Boolean).length;
 
@@ -195,7 +151,7 @@ export function getConfidenceScore(motorData) {
   } else if (abnormalCount >= 3) {
     confidence = 96; // Very clear failure pattern
   } else {
-    confidence = 78 + abnormalCount * 4;
+    confidence = 78 + abnormalCount * 5;
   }
 
   // Add small random variation for realism

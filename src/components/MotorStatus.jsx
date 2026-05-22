@@ -26,7 +26,7 @@ export default function MotorStatus({ motorData }) {
   const isCritical = status === 'CRITICAL FAILURE RISK' || status === 'BEARING FAILURE PREDICTED';
 
   return (
-    <div id="motor-status" className={`glass-card-static p-5 sm:p-6 ${config.bgClass} ${isCritical ? 'animate-blink-critical' : ''}`}>
+    <div id="motor-status" className={`glass-card-static p-5 sm:p-6 h-full ${config.bgClass} ${isCritical ? 'animate-blink-critical' : ''}`}>
       <div className="flex items-center gap-2 mb-4">
         <div className="w-2 h-2 rounded-full bg-cyan-400" />
         <h3 className="text-sm font-semibold text-gray-300 tracking-wider uppercase">
@@ -54,23 +54,25 @@ export default function MotorStatus({ motorData }) {
         </div>
       </div>
 
-      {/* Status indicators */}
-      <div className="grid grid-cols-2 gap-2 mt-4">
-        <div className="bg-navy-900/50 rounded-lg px-3 py-2">
-          <p className="text-[10px] text-gray-500 uppercase tracking-wider">Health</p>
-          <p className={`text-sm font-bold font-mono ${
+      {/* Health indicator */}
+      <div className="bg-navy-900/50 rounded-lg px-3 py-3 mt-4">
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider">Overall Health</p>
+          <p className={`text-lg font-bold font-mono ${
             motorData.health > 70 ? 'text-green-400' : motorData.health > 40 ? 'text-amber-400' : 'text-red-400'
           }`}>
             {motorData.health?.toFixed(1)}%
           </p>
         </div>
-        <div className="bg-navy-900/50 rounded-lg px-3 py-2">
-          <p className="text-[10px] text-gray-500 uppercase tracking-wider">Efficiency</p>
-          <p className={`text-sm font-bold font-mono ${
-            motorData.efficiency > 70 ? 'text-cyan-400' : motorData.efficiency > 50 ? 'text-amber-400' : 'text-red-400'
-          }`}>
-            {motorData.efficiency?.toFixed(1)}%
-          </p>
+        <div className="h-1.5 bg-navy-700 rounded-full overflow-hidden">
+          <div
+            className="h-full rounded-full transition-all duration-500"
+            style={{
+              width: `${motorData.health}%`,
+              background: motorData.health > 70 ? '#4ade80' : motorData.health > 40 ? '#fbbf24' : '#ef4444',
+              boxShadow: `0 0 8px ${motorData.health > 70 ? '#4ade8040' : motorData.health > 40 ? '#fbbf2440' : '#ef444440'}`,
+            }}
+          />
         </div>
       </div>
     </div>

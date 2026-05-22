@@ -1,7 +1,7 @@
 // ControlPanel — Mobile-friendly sensor control page
 import { useState } from 'react';
 import {
-  Thermometer, Zap, Activity, RotateCw, AlertTriangle,
+  Thermometer, Zap, Activity, AlertTriangle,
   XOctagon, RotateCcw, OctagonX, Wifi, WifiOff,
   Plus, Minus, ChevronLeft, Settings,
 } from 'lucide-react';
@@ -87,16 +87,15 @@ export default function ControlPanel({ sendCommand, isConnected, motorData }) {
 
         {/* Live Values */}
         {motorData && (
-          <div className="grid grid-cols-4 gap-2 mb-4">
+          <div className="grid grid-cols-3 gap-2 mb-4">
             {[
               { label: 'TEMP', value: `${motorData.temperature?.toFixed(1)}°`, color: motorData.temperature > 80 ? 'text-amber-400' : 'text-cyan-400' },
               { label: 'AMP', value: `${motorData.current?.toFixed(1)}A`, color: motorData.current > 15 ? 'text-amber-400' : 'text-cyan-400' },
               { label: 'VIB', value: `L${motorData.vibration}`, color: motorData.vibration >= 3 ? 'text-red-400' : 'text-cyan-400' },
-              { label: 'RPM', value: motorData.rpm, color: motorData.rpm > 3500 ? 'text-amber-400' : 'text-cyan-400' },
             ].map((item) => (
-              <div key={item.label} className="glass-card-static rounded-xl p-2.5 text-center">
+              <div key={item.label} className="glass-card-static rounded-xl p-3 text-center">
                 <p className="text-[9px] text-gray-500 font-mono uppercase">{item.label}</p>
-                <p className={`text-sm font-bold font-mono ${item.color}`}>{item.value}</p>
+                <p className={`text-lg font-bold font-mono ${item.color}`}>{item.value}</p>
               </div>
             ))}
           </div>
@@ -124,13 +123,6 @@ export default function ControlPanel({ sendCommand, isConnected, motorData }) {
           <ActionButton label="Level 3" color="red" action="vibration_3" />
         </div>
 
-        {/* RPM Controls */}
-        <SectionTitle icon={RotateCw} title="RPM" />
-        <div className="grid grid-cols-2 gap-3">
-          <ActionButton label="RPM +" icon={Plus} color="amber" action="rpm_up" />
-          <ActionButton label="RPM −" icon={Minus} color="cyan" action="rpm_down" />
-        </div>
-
         {/* Special Actions */}
         <SectionTitle icon={AlertTriangle} title="Special Actions" />
         <div className="space-y-3">
@@ -140,7 +132,6 @@ export default function ControlPanel({ sendCommand, isConnected, motorData }) {
           <ActionButton label="EMERGENCY STOP" icon={OctagonX} color="red" action="emergency_stop" fullWidth size="large" />
         </div>
 
-        {/* Footer */}
         <p className="text-center text-[10px] text-gray-600 mt-6 font-mono">
           Sensor Simulator v2.0 • Controls connected via WebSocket
         </p>

@@ -33,30 +33,6 @@ export const METRICS = {
     min: 0,
     max: 100,
   },
-  rpm: {
-    name: 'RPM',
-    unit: 'rpm',
-    icon: 'RotateCw',
-    thresholds: { warning: 3500, danger: 4500 },
-    min: 0,
-    max: 5000,
-  },
-  power: {
-    name: 'Power',
-    unit: 'kW',
-    icon: 'Battery',
-    thresholds: { warning: 15, danger: 25 },
-    min: 0,
-    max: 30,
-  },
-  efficiency: {
-    name: 'Efficiency',
-    unit: '%',
-    icon: 'Gauge',
-    thresholds: { warning: 70, danger: 50, inverse: true },
-    min: 0,
-    max: 100,
-  },
 };
 
 export const STATUS_CONFIG = {

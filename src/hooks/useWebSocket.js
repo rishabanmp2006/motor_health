@@ -9,7 +9,6 @@ export default function useWebSocket() {
   const [motorData, setMotorData] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [alerts, setAlerts] = useState([]);
-  const [activityFeed, setActivityFeed] = useState([]);
   const [history, setHistory] = useState({
     temperature: [],
     current: [],
@@ -38,7 +37,6 @@ export default function useWebSocket() {
           if (message.type === 'motorData') {
             setMotorData(message.data);
             setAlerts(message.alerts || []);
-            setActivityFeed(message.activityFeed || []);
 
             // Update chart history
             const timeLabel = getTimeString();
@@ -106,7 +104,6 @@ export default function useWebSocket() {
     motorData,
     isConnected,
     alerts,
-    activityFeed,
     history,
     sendCommand,
   };

@@ -9,7 +9,7 @@ import LoadingScreen from './components/LoadingScreen';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const { motorData, isConnected, alerts, activityFeed, history, sendCommand } = useWebSocket();
+  const { motorData, isConnected, alerts, history, sendCommand } = useWebSocket();
 
   const handleLoadingComplete = useCallback(() => {
     setLoading(false);
@@ -44,7 +44,6 @@ export default function App() {
                   motorData={motorData}
                   isConnected={isConnected}
                   alerts={alerts}
-                  activityFeed={activityFeed}
                   history={history}
                 />
               }
